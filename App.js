@@ -89,16 +89,10 @@ class Form extends React.Component {
     return (
       <View key={item.id} style={[styles.flatListContainer, {backgroundColor: item.color}]}>
       <TouchableHighlight onPress={() => {item.clicked ? item.clicked = false : item.clicked = true}}>
-        <View style={{
-          height: 20,
-          width: 40,
-          borderRadius: 20,
-          backgroundColor: 'lightgrey',
-          display: 'flex',
-          alignItems: 'center',
-        }}>
-          <Text>
-            {item.id}
+        <View>
+          <Text style={[styles.text, item.clicked ? {backgroundColor: 'green'} : {backgroundColor: 'grey'}]}>
+            {item.id}:
+            Click on me to activate or disactivate me
           </Text>
         </View>
       </TouchableHighlight>
@@ -205,5 +199,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height:20,
     margin: 20,
-  }
+  },
+  text: {
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+  },
 });
