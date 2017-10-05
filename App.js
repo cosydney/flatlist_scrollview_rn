@@ -12,10 +12,10 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 class Footer extends React.Component {
-  
   myscrollToIndex(index){
-    this.props.reflist.scrollToIndex({animated: true,index: index, viewPosition: 0.5},
-    );
+    if (this.props.reflist) {
+      this.props.reflist.scrollToIndex({animated: true,index: index, viewPosition: 0.5});
+    }
   };
 
   render() {
@@ -72,6 +72,11 @@ class Footer extends React.Component {
 class Form extends React.Component {
   state = {
     index: 0,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
   };
 
   myscrollToIndex = () => {
@@ -86,6 +91,7 @@ class Form extends React.Component {
   }
 
   _changeStatus = (item) => {
+    this.setState({[item.id]: !this.state[item.id]})
     item.clicked ? item.clicked = false : item.clicked = true
   }
 
@@ -104,7 +110,7 @@ class Form extends React.Component {
 
       <TouchableOpacity
       onPress={(count === this.state.index) ? this._finishFormVal : this.myscrollToIndex}
-      style={styles.button}
+      style={styles.buttonNext}
       >
         <Text>
         Next
@@ -112,10 +118,6 @@ class Form extends React.Component {
       </TouchableOpacity>
       </View>
     )
-  }
-
-  ComponentWillUpdate() {
-    this._renderItem
   }
 
   handleScroll = (event: Object) => {
@@ -138,7 +140,7 @@ class Form extends React.Component {
           onScroll={this.handleScroll}
           keyboardShouldPersistTaps={"always"}
           data={this.props.form}
-          extraData={this.props}
+          extraData={this.props.form}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           keyboardDismissMode={'on-drag'}
@@ -222,11 +224,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 30,
   },
-  button: {
+  buttonNext: {
+    top: 250,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
     height: 50,
     width: 150,
     borderRadius: 75,
