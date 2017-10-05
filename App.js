@@ -11,13 +11,8 @@ TouchableOpacity } from "react-native";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-
 class Footer extends React.Component {
-  constructor (props) {
-    super(props);
-    this.myscrollToIndex = this.myscrollToIndex.bind(this)
-  }
-
+  
   myscrollToIndex(index){
     this.props.reflist.scrollToIndex({animated: true,index: index, viewPosition: 0.5},
     );
@@ -86,14 +81,19 @@ class Form extends React.Component {
   };
 
   _finishFormVal = () => {
+    //make some sort of validations here for all your answers
     alert('You finished this form and you are being redirected')
+  }
+
+  _changeStatus = (item) => {
+    item.clicked ? item.clicked = false : item.clicked = true
   }
 
   _renderItem = ({item}) => {
     count = this.props.form.length - 1 //will compare to index which is always 1 less
     return (
       <View key={item.id} style={[styles.flatListContainer, {backgroundColor: item.color}]}>
-      <TouchableHighlight onPress={() => {item.clicked ? item.clicked = false : item.clicked = true}}>
+      <TouchableHighlight onPress={() => {this._changeStatus(item)}}>
         <View>
           <Text style={[styles.text, item.clicked ? {backgroundColor: 'green'} : {backgroundColor: 'grey'}]}>
             {item.id}:
@@ -112,6 +112,10 @@ class Form extends React.Component {
       </TouchableOpacity>
       </View>
     )
+  }
+
+  ComponentWillUpdate() {
+    this._renderItem
   }
 
   handleScroll = (event: Object) => {
@@ -134,7 +138,7 @@ class Form extends React.Component {
           onScroll={this.handleScroll}
           keyboardShouldPersistTaps={"always"}
           data={this.props.form}
-          extraData={[this.props, this.state]}
+          extraData={this.props}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           keyboardDismissMode={'on-drag'}
