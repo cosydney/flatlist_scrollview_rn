@@ -14,7 +14,10 @@ const height = Dimensions.get('window').height;
 class Footer extends React.Component {
   myscrollToIndex(index){
     if (this.props.reflist) {
-      this.props.reflist.scrollToIndex({animated: true,index: index, viewPosition: 0.5});
+      this.props.reflist.scrollToIndex({
+        animated: true,
+        index: index,
+        viewPosition: 0.5});
     }
   };
 
@@ -37,33 +40,33 @@ class Footer extends React.Component {
 
     return (
       <View style={styles.footer}>
-      <View style={styles.footerLine}></View>
-      { steps.map(function(object, i){
-          if (object.color == 'grey'){
-            return(
-              <View key={i}>
-                <TouchableOpacity key={i} onPress={() => this.myscrollToIndex(i)}>
-                <View style={[styles.dots, {backgroundColor: 'grey'}]}>
-                </View>
-                </TouchableOpacity>
-              </View>)
-          } else if (object.color == 'green') {
-            return(
-              <View key={i}>
-                <TouchableOpacity key={i} onPress={() => this.myscrollToIndex(i)}>
-                <View style={[styles.dots, {backgroundColor: 'green'}]}>
-                </View>
+        <View style={[styles.footerLine, {width: 36*steps.length}]}></View>
+        { steps.map(function(object, i){
+            if (object.color == 'grey'){
+              return(
+                <View key={i}>
+                  <TouchableOpacity key={i} onPress={() => this.myscrollToIndex(i)}>
+                  <View style={[styles.dots, {backgroundColor: 'grey'}]}>
+                  </View>
                   </TouchableOpacity>
-              </View>)
-          } else {
-            return(
-              <View key={i}>
-              <View style={[styles.dots, {backgroundColor: 'steelblue'}]}>
-              </View>
-              </View>)
-          }
-        }, this)
-      }
+                </View>)
+            } else if (object.color == 'green') {
+              return(
+                <View key={i}>
+                  <TouchableOpacity key={i} onPress={() => this.myscrollToIndex(i)}>
+                  <View style={[styles.dots, {backgroundColor: 'green'}]}>
+                  </View>
+                    </TouchableOpacity>
+                </View>)
+            } else {
+              return(
+                <View key={i}>
+                <View style={[styles.dots, {backgroundColor: 'steelblue'}]}>
+                </View>
+                </View>)
+            }
+          }, this)
+        }
      </View>
     )
   }
@@ -72,11 +75,7 @@ class Footer extends React.Component {
 class Form extends React.Component {
   state = {
     index: 0,
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
+    update: true,
   };
 
   myscrollToIndex = () => {
@@ -91,18 +90,18 @@ class Form extends React.Component {
   }
 
   _changeStatus = (item) => {
-    this.setState({[item.id]: !this.state[item.id]})
     item.clicked ? item.clicked = false : item.clicked = true
+    this.setState({update: !this.state.update}) // this signals Flatlist to rerender
   }
 
   _renderItem = ({item}) => {
-    count = this.props.form.length - 1 //will compare to index which is always 1 less
+    count = (this.props.form.length - 1) //will compare to index which is always 1 less
     return (
       <View key={item.id} style={[styles.flatListContainer, {backgroundColor: item.color}]}>
       <TouchableHighlight onPress={() => {this._changeStatus(item)}}>
         <View>
           <Text style={[styles.text, item.clicked ? {backgroundColor: 'green'} : {backgroundColor: 'grey'}]}>
-            {item.id}:
+            I am question {item.id + "\n"}
             Click on me to activate or disactivate me
           </Text>
         </View>
@@ -110,18 +109,15 @@ class Form extends React.Component {
 
       <TouchableOpacity
       onPress={(count === this.state.index) ? this._finishFormVal : this.myscrollToIndex}
-      style={styles.buttonNext}
-      >
-        <Text>
-        Next
-        </Text>
+      style={styles.buttonNext}>
+        <Text>Next</Text>
       </TouchableOpacity>
       </View>
     )
   }
 
   handleScroll = (event: Object) => {
-    newindex = Math.floor(event.nativeEvent.contentOffset.y / (height))
+    newindex = Math.floor(event.nativeEvent.contentOffset.y / height)
     this.setState({index: newindex})
   }
 
@@ -159,16 +155,17 @@ class Form extends React.Component {
 
 export default class App extends React.Component {
   render() {
-    form = [
+    formData = [
         {id: 1, color: 'skyblue', clicked: false},
         {id: 2, color: 'lightgreen', clicked: false},
         {id: 3, color: 'steelblue', clicked: false},
         {id: 4, color: 'green', clicked: false},
-        {id: 5, color: 'powderblue', clicked: false}
+        {id: 5, color: 'powderblue', clicked: false},
+        {id: 6, color: 'powderblue', clicked: false},
     ]
     return (
       <View style={styles.container}>
-        <Form form={form}/>
+        <Form form={formData}/>
       </View>
     );
   }
@@ -211,18 +208,18 @@ const styles = StyleSheet.create({
     height: 1,
     borderColor: 'darkgrey',
     borderWidth: 1,
-    marginHorizontal: 50,
-    paddingHorizontal: 120
+    marginHorizontal: 40,
   },
   dots: {
     width: 20,
     borderRadius: 10,
-    height:20,
-    margin: 20,
+    height: 20,
+    margin: 13,
   },
   text: {
     paddingVertical: 20,
     paddingHorizontal: 30,
+    textAlign: 'center'
   },
   buttonNext: {
     top: 250,
