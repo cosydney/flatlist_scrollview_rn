@@ -1,6 +1,6 @@
-I remember struggling using FlatList when I started react native and this repo is an example of it using ScrollView with some clickable progress par footer.
+Note from the author: I remember struggling using FlatList when I started react native and this repo is an example of it using ScrollView with some clickable progress par footer.
 
-## Scrollabale form using React Native FlatList and ScrollTo method
+# Scrollabale form using React Native FlatList and ScrollTo method
 
 copy paste the following in your terminal to see it in action :
 
