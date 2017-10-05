@@ -85,7 +85,12 @@ class Form extends React.Component {
     );
   };
 
+  _finishFormVal = () => {
+    alert('You finished this form and you are being redirected')
+  }
+
   _renderItem = ({item}) => {
+    count = this.props.form.length - 1 //will compare to index which is always 1 less
     return (
       <View key={item.id} style={[styles.flatListContainer, {backgroundColor: item.color}]}>
       <TouchableHighlight onPress={() => {item.clicked ? item.clicked = false : item.clicked = true}}>
@@ -96,6 +101,15 @@ class Form extends React.Component {
           </Text>
         </View>
       </TouchableHighlight>
+
+      <TouchableOpacity
+      onPress={(count === this.state.index) ? this._finishFormVal : this.myscrollToIndex}
+      style={styles.button}
+      >
+        <Text>
+        Next
+        </Text>
+      </TouchableOpacity>
       </View>
     )
   }
@@ -204,4 +218,14 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 30,
   },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+    height: 50,
+    width: 150,
+    borderRadius: 75,
+    backgroundColor: 'lightgrey'
+  }
 });
