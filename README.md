@@ -5,7 +5,7 @@ I remember struggling using FlatList when I started react native and this repo i
 ```git clone https://github.com/cosydney/flatlist_scrollview_rn.git && cd flatlist_scrollview_rn && npm install && yarn install && npm run ios```
 
 
-![Gif example](https://giphy.com/gifs/form-react-native-flatlist-xT1R9Np4YztY2EwYq4)
+![Gif example](https://media.giphy.com/media/xT1R9Np4YztY2EwYq4/giphy.gif)
 
 App.js code:
 
