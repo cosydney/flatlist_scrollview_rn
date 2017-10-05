@@ -2,6 +2,8 @@ I remember struggling using FlatList when I started react native and this repo i
 
 ## Scrollabale form using React Native FlatList and ScrollTo method
 
+copy paste the following in your terminal to see it in action : 
+
 ```git clone https://github.com/cosydney/flatlist_scrollview_rn.git && cd flatlist_scrollview_rn && npm install && yarn install && npm run ios```
 
 
